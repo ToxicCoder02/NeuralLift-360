@@ -4,7 +4,7 @@ trimesh
 opencv-python
 tensorboardX
 torch
-numpy 
+numpy>=1.21.0,<=1.24.0
 pandas
 tqdm
 matplotlib

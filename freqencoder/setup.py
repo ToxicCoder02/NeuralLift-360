@@ -4,6 +4,34 @@ from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
 _src_path = os.path.dirname(os.path.abspath(__file__))
 
+from setuptools import setup
+from torch.utils.cpp_extension import BuildExtension, CUDAExtension
+
+setup(
+    name='freqencoder',
+    ext_modules=[
+        CUDAExtension(
+            name='freqencoder',
+            sources=['src/freqencoder.cu', 'src/bindings.cpp'],
+            extra_compile_args={
+                'cxx': ['/O2'],
+                'nvcc': [
+                    '-O3',
+                    '--use_fast_math',
+                    '-gencode', 'arch=compute_86,code=sm_86',
+                    '-I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include"',
+                    '-L"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64"'
+                ]
+            }
+        ),
+    ],
+    cmdclass={
+        'build_ext': BuildExtension
+    }
+)
+
+
+
 nvcc_flags = [
     '-O3', '-std=c++14',
     '-U__CUDA_NO_HALF_OPERATORS__', '-U__CUDA_NO_HALF_CONVERSIONS__', '-U__CUDA_NO_HALF2_OPERATORS__',
