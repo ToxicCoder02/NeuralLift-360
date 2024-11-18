@@ -14,13 +14,14 @@ setup(
             name='freqencoder',
             sources=['src/freqencoder.cu', 'src/bindings.cpp'],
             extra_compile_args={
-                'cxx': ['/O2'],
+                'cxx': ['/std:c++17'],
                 'nvcc': [
+                    '--expt-relaxed-constexpr',
+                    '-std=c++17',
                     '-O3',
-                    '--use_fast_math',
-                    '-gencode', 'arch=compute_86,code=sm_86',
-                    '-I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include"',
-                    '-L"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64"'
+                    '-U__CUDA_NO_HALF_OPERATORS__',
+                    '-U__CUDA_NO_HALF_CONVERSIONS__',
+                    '-U__CUDA_NO_HALF2_OPERATORS__'
                 ]
             }
         ),
@@ -67,10 +68,20 @@ setup(
                 'freqencoder.cu',
                 'bindings.cpp',
             ]],
-            extra_compile_args={
-                'cxx': c_flags,
-                'nvcc': nvcc_flags,
-            }
+            extra_compile_args = {
+            'cxx': ['/std:c++17'],  # For MSVC
+            'nvcc': [
+                '--expt-relaxed-constexpr',
+                '-std=c++17',
+                '-O3',
+                '-U__CUDA_NO_HALF_OPERATORS__',
+                '-U__CUDA_NO_HALF_CONVERSIONS__',
+                '-U__CUDA_NO_HALF2_OPERATORS__',
+                '--use_fast_math',
+                '-allow-unsupported-compiler'
+            ]
+        }       
+
         ),
     ],
     cmdclass={

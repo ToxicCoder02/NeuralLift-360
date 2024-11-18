@@ -6,6 +6,10 @@ from nerf.utils_neurallift import *
 import gradio as gr
 import gc
 
+from datetime import datetime
+
+# Replace colons with hyphens in the timestamp
+
 
 from optimizer import Shampoo
 
@@ -42,6 +46,7 @@ if __name__ == '__main__':
     opt.workspace = os.path.basename(args.config).replace('.yaml', '')
     opt.workspace = os.path.join('logs', str(datetime.today().strftime('%Y-%m-%d')), opt.workspace + '_' + datetime.today().strftime('%H:%M:%S'))
     import os, shutil
+    opt.workspace = f"logs/{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}/{opt.text.replace(' ', '_')}"
     os.makedirs(opt.workspace, exist_ok=True)
     shutil.copy(args.config, os.path.join(opt.workspace, os.path.basename(args.config)))
 
