@@ -54,7 +54,7 @@ def safe_normalize(x, eps=1e-20):
     return x / torch.sqrt(torch.clamp(torch.sum(x * x, -1, keepdim=True), min=eps))
 
 # Optimized get_rays function with memory efficiency
-@torch.amp.autocast(enabled=False)
+@torch.cuda.amp.autocast(enabled=False)
 def get_rays(poses, intrinsics, H, W, N=-1, error_map=None):
     device = poses.device
     B = poses.shape[0]
