@@ -1,13 +1,9 @@
-# Prompt
-text: 'A large cabin on top of a sunny mountain in the style of Dreamworks, artstation'  # text prompt
-negative: ''  # negative text prompt
-
 # Training Settings
 test: False  # test mode
 save_mesh: False  # export an OBJ mesh with texture
 eval_interval: 200  # evaluate on the valid set every interval epochs
 seed: 12  # random seed for reproducibility
-iters: 10000  # number of training iterations
+iters: 2500  # reduced number of training iterations (previously 5000)
 lr: 1.0e-3  # initial learning rate
 ckpt: 'latest'  # checkpoint to start training from
 fp16: True  # use mixed precision (fp16) for training to save memory
@@ -15,12 +11,12 @@ backbone: 'grid_finite'  # NeRF backbone type (grid-based)
 
 # NGP (Neural Graphics Primitives)
 cuda_ray: False  # use CUDA raymarching (not supported here)
-max_steps: 512  # Reduce max steps per ray to save memory (from 1024)
-num_steps: 32  # Reduce number of steps per ray (from 64)
-upsample_steps: 32  # Reduce upsampled steps per ray (from 64)
-update_extra_interval: 16  # update extra status interval (when using cuda_ray)
-max_ray_batch: 2048  # Reduce batch size for rays during inference (from 4096)
-albedo_iters: 200  # Reduce iterations for albedo shading
+max_steps: 128  # further reduce max steps per ray (previously 256)
+num_steps: 8  # further reduce number of steps per ray (previously 16)
+upsample_steps: 8  # further reduce upsampled steps per ray (previously 16)
+update_extra_interval: 4  # update extra status interval (when using cuda_ray)
+max_ray_batch: 512  # reduced batch size for rays during inference (previously 1024)
+albedo_iters: 50  # further reduce iterations for albedo shading (previously 100)
 bg_radius: 1.4  # background model sphere radius
 density_activation: 'exp'  # activation function for density
 density_thresh: 0.1  # threshold for density grid
@@ -34,9 +30,9 @@ blob_density: 5  # maximum density for the density blob
 blob_radius: 0.2  # radius for the density blob
 
 # Camera Settings
-w: 64  # Reduce render width for training (from 128)
-h: 64  # Reduce render height for training (from 128)
-normal_shape: 50  # Reduce render height for normals (from 100)
+w: 16  # further reduce render width for training (previously 32)
+h: 16  # further reduce render height for training (previously 32)
+normal_shape: 50  # reduced render height for normals (previously 100)
 jitter_pose: True  # add jitter to sampled camera poses
 bound: 1  # scene boundary box
 dt_gamma: 0  # adaptive ray marching (set to 0 to disable)
@@ -60,8 +56,8 @@ distortion: 0.1  # distortion loss for MipNeRF360
 
 # Test-time Rendering Settings
 gui: False  # enable GUI for testing
-W: 400  # Reduce test render width (from 800)
-H: 400  # Reduce test render height (from 800)
+W: 200  # further reduce test render width (previously 300)
+H: 200  # further reduce test render height (previously 300)
 fovy: 60  # field of view for the test camera
 
 # Reference View Settings
